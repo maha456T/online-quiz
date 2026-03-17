@@ -1,0 +1,20 @@
+# Use official PHP-Apache image
+FROM php:8.2-apache
+
+# Enable Apache mod_rewrite (needed for many PHP apps)
+RUN a2enmod rewrite
+
+# Copy project files into Apache’s web root
+COPY . /var/www/html/
+
+# Set working directory
+WORKDIR /var/www/html/
+
+# Install common PHP extensions (adjust as needed)
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Expose port 80 for web traffic
+EXPOSE 80
+
+# Start Apache in foreground
+CMD ["apache2-foreground"]
